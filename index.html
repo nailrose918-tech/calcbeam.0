@@ -628,6 +628,13 @@ table.calc-table th{color:var(--ink-faint);text-transform:uppercase;font-size:.7
   <div class="grid grid-3" id="categoryGrid" style="margin-top:24px;"></div>
 </div>
 </div>
+  <div id="view-page" style="display:none;">
+    <div class="container legal-page">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="javascript:void(0)" data-nav="home">Home</a> &rsaquo; <span aria-current="page" id="pageBreadcrumb">Page</span></nav>
+      <h1 id="pageHeading">Page</h1>
+      <div class="prose" id="pageProse"></div>
+    </div>
+  </div>
   <div id="view-calculator" style="display:none;">
     <div class="container" id="calcContainer"></div>
   </div>
@@ -664,17 +671,17 @@ table.calc-table th{color:var(--ink-faint);text-transform:uppercase;font-size:.7
       <div>
         <h4>Company</h4>
         <ul>
-          <li><a href="about.html">About</a></li>
-          <li><a href="contact.html">Contact</a></li>
+          <li><a href="javascript:void(0)" data-page="about">About</a></li>
+          <li><a href="javascript:void(0)" data-page="contact">Contact</a></li>
         </ul>
       </div>
       <div>
         <h4>Legal</h4>
         <ul>
-          <li><a href="privacy-policy.html">Privacy Policy</a></li>
-          <li><a href="terms.html">Terms & Conditions</a></li>
-          <li><a href="disclaimer.html">Disclaimer</a></li>
-          <li><a href="cookie-policy.html">Cookie Policy</a></li>
+          <li><a href="javascript:void(0)" data-page="privacy-policy">Privacy Policy</a></li>
+          <li><a href="javascript:void(0)" data-page="terms">Terms & Conditions</a></li>
+          <li><a href="javascript:void(0)" data-page="disclaimer">Disclaimer</a></li>
+          <li><a href="javascript:void(0)" data-page="cookie-policy">Cookie Policy</a></li>
         </ul>
       </div>
     </div>
@@ -4303,6 +4310,10 @@ const CALCBEAM_CALCS = [{"id": "percentage-calculator", "name": "Percentage Calc
 const CALCBEAM_CATEGORIES = [{"name": "Math", "desc": "Percentages, ratios, fractions, averages and a full scientific calculator."}, {"name": "Finance", "desc": "Loans, mortgages, interest, tips, tax, margin and ROI."}, {"name": "Health", "desc": "BMI and calorie estimators for everyday health tracking."}, {"name": "Education", "desc": "GPA and grade calculators for students."}, {"name": "Date & Time", "desc": "Age, date differences, and time duration tools."}, {"name": "Conversion", "desc": "Unit conversion for length, weight, temperature and more."}];
 const URL_TO_CALC = {"percentage-calculator.html": "percentage-calculator", "average-calculator.html": "average-calculator", "ratio-calculator.html": "ratio-calculator", "fraction-calculator.html": "fraction-calculator", "scientific-calculator.html": "scientific-calculator", "mortgage-calculator.html": "mortgage-calculator", "loan-calculator.html": "loan-calculator", "compound-interest-calculator.html": "compound-interest-calculator", "simple-interest-calculator.html": "simple-interest-calculator", "investment-calculator.html": "investment-calculator", "discount-calculator.html": "discount-calculator", "sales-tax-calculator.html": "sales-tax-calculator", "tip-calculator.html": "tip-calculator", "profit-margin-calculator.html": "profit-margin-calculator", "roi-calculator.html": "roi-calculator", "markup-calculator.html": "markup-calculator", "bmi-calculator.html": "bmi-calculator", "calorie-calculator.html": "calorie-calculator", "gpa-calculator.html": "gpa-calculator", "grade-calculator.html": "grade-calculator", "age-calculator.html": "age-calculator", "date-calculator.html": "date-calculator", "time-calculator.html": "time-calculator", "unit-converter.html": "unit-converter", "fuel-cost-calculator.html": "fuel-cost-calculator"};
 const CATEGORY_PAGES = {"math-calculators.html": "Math", "finance-calculators.html": "Finance", "health-calculators.html": "Health", "education-calculators.html": "Education", "date-time-calculators.html": "Date & Time", "conversion-calculators.html": "Conversion", "calculators.html": "__all__"};
+const URL_TO_PAGE = {"about.html": "about", "contact.html": "contact", "privacy-policy.html": "privacy-policy", "terms.html": "terms", "disclaimer.html": "disclaimer", "cookie-policy.html": "cookie-policy"};
+const STATIC_PAGES = {"about": {"h1": "About CalcBeam", "prose": "<p>CalcBeam is a free collection of browser-based calculators for math, finance, health, education, date &amp; time, and unit conversion. The goal is simple: give people a fast, accurate answer without ads blocking the calculator, without an account, and without sending any of their numbers to a server.</p>\n<h2>How CalcBeam works</h2>\n<p>Every calculator on this site runs entirely as HTML, CSS and JavaScript in your own browser. When you type a number into a CalcBeam calculator, that number is never transmitted anywhere — the math happens on your device and stays there.</p>\n<h2>What CalcBeam is not</h2>\n<p>CalcBeam calculators produce estimates based on standard formulas. They are not a substitute for advice from a qualified financial advisor, doctor, accountant, or lender. Always confirm important decisions — a mortgage, a medical question, a tax filing — with a licensed professional.</p>\n<h2>Who built it</h2>\n<p>CalcBeam is an independent, ad-supported website. It is not affiliated with any bank, lender, gym, university, or government agency referenced in its calculators.</p>", "title": "About CalcBeam", "desc": "Learn what CalcBeam is, how the calculators work, and what they are not intended for."}, "contact": {"h1": "Contact Us", "prose": "<p>Have a question, spotted a bug, or want to suggest a calculator CalcBeam should add? Reach out using the details below.</p>\n<h2>General inquiries</h2>\n<p>Email: <a href=\"mailto:hello@calcbeam.com\">hello@calcbeam.com</a></p>\n<h2>Report a calculation issue</h2>\n<p>If you believe a calculator is producing an incorrect result, please tell us the calculator name, the exact inputs you used, and the result you expected. This helps us verify and fix issues quickly.</p>\n<h2>Advertising &amp; partnerships</h2>\n<p>Email: <a href=\"mailto:ads@calcbeam.com\">ads@calcbeam.com</a></p>", "title": "Contact Us", "desc": "Get in touch with the CalcBeam team for questions, bug reports, or partnership inquiries."}, "privacy-policy": {"h1": "Privacy Policy", "prose": "<p>Last updated: August 2026</p>\n<h2>What we collect</h2>\n<p>CalcBeam calculators run in your browser. Numbers you type into a calculator are processed locally on your device and are not sent to CalcBeam's servers. CalcBeam may use standard, privacy-respecting analytics to understand which pages are visited, and may display advertising through third-party networks such as Google AdSense.</p>\n<h2>Cookies &amp; local storage</h2>\n<p>CalcBeam uses your browser's local storage to remember your dark/light mode preference and your recently used calculators. This information stays on your device and can be cleared at any time through your browser settings. See our <a href=\"javascript:void(0)\" data-page=\"cookie-policy\">Cookie Policy</a> for details.</p>\n<h2>Third-party advertising</h2>\n<p>CalcBeam may work with advertising partners, including Google, which may use cookies to serve ads based on your prior visits to this or other websites. You can opt out of personalized advertising through Google's Ads Settings.</p>\n<h2>Children's privacy</h2>\n<p>CalcBeam does not knowingly collect personal information from children under 13.</p>\n<h2>Contact</h2>\n<p>Questions about this policy can be sent to <a href=\"mailto:hello@calcbeam.com\">hello@calcbeam.com</a>.</p>", "title": "Privacy Policy", "desc": "How CalcBeam handles data, cookies, local storage, and third-party advertising."}, "terms": {"h1": "Terms & Conditions", "prose": "<p>Last updated: August 2026</p>\n<h2>Use of the site</h2>\n<p>CalcBeam grants you a limited, non-exclusive license to use this website and its calculators for personal or internal business purposes. You may not copy, scrape, or republish CalcBeam's content or code as your own product.</p>\n<h2>No warranty</h2>\n<p>Calculators are provided \"as is,\" without warranty of any kind. While CalcBeam aims for mathematical accuracy, results are estimates and may not reflect your exact real-world circumstances, fees, or local rules.</p>\n<h2>Limitation of liability</h2>\n<p>CalcBeam is not liable for financial, medical, academic, or other decisions made based on results from this website. See our <a href=\"javascript:void(0)\" data-page=\"disclaimer\">Disclaimer</a> for more detail.</p>\n<h2>Changes</h2>\n<p>These terms may be updated periodically. Continued use of CalcBeam after changes means you accept the revised terms.</p>", "title": "Terms & Conditions", "desc": "The terms governing your use of CalcBeam's calculators and website."}, "disclaimer": {"h1": "Disclaimer", "prose": "<h2>General</h2>\n<p>CalcBeam provides free calculators for informational and educational purposes only. Results are estimates based on the inputs you provide and standard formulas — they are not guarantees.</p>\n<h2>Financial calculators</h2>\n<p>Mortgage, loan, interest, investment, ROI, and similar calculators do not account for every fee, tax rule, or lender-specific term. They are not financial advice. Consult a licensed financial professional before making financial decisions.</p>\n<h2>Health calculators</h2>\n<p>BMI and calorie calculators provide general estimates only and are not medical advice. They do not account for individual health conditions. Consult a doctor or registered dietitian for personalized guidance.</p>\n<h2>Education calculators</h2>\n<p>GPA and grade calculators follow common grading conventions but may not match your specific school's grading scale or policy.</p>", "title": "Disclaimer", "desc": "Important disclaimers about the accuracy and use of CalcBeam calculators."}, "cookie-policy": {"h1": "Cookie Policy", "prose": "<h2>What cookies and local storage do we use?</h2>\n<p>CalcBeam uses your browser's <code>localStorage</code> to remember your theme preference (light or dark mode) and a short list of your recently used calculators. This data never leaves your device.</p>\n<h2>Third-party cookies</h2>\n<p>If CalcBeam displays advertising, ad providers such as Google may set their own cookies to measure ad performance and, where permitted, personalize ads. CalcBeam does not control these third-party cookies directly.</p>\n<h2>Managing cookies</h2>\n<p>You can clear cookies and local storage at any time through your browser's settings, or opt out of personalized ads via your ad provider's preference tools.</p>", "title": "Cookie Policy", "desc": "How CalcBeam uses local storage and third-party cookies."}};
+const DEFAULT_TITLE = document.title;
+const DEFAULT_DESC = document.querySelector('meta[name="description"]') ? document.querySelector('meta[name="description"]').getAttribute("content") : "";
 
 /* =========================================================
    CALCBEAM — calculator utilities
@@ -4493,12 +4504,20 @@ function showView(name){
   document.getElementById("view-home").style.display = name === "home" ? "" : "none";
   document.getElementById("view-category").style.display = name === "category" ? "" : "none";
   document.getElementById("view-calculator").style.display = name === "calculator" ? "" : "none";
+  document.getElementById("view-page").style.display = name === "page" ? "" : "none";
   window.scrollTo(0,0);
+}
+
+function setMeta(title, desc){
+  document.title = title;
+  const m = document.querySelector('meta[name="description"]');
+  if(m) m.setAttribute("content", desc);
 }
 
 function showHome(){
   showView("home");
   renderRecentCalculators("recentStrip");
+  setMeta(DEFAULT_TITLE, DEFAULT_DESC);
   history.replaceState(null, "", "#");
 }
 
@@ -4525,6 +4544,8 @@ function showCalculator(id){
   container.innerHTML = "";
   container.appendChild(tpl.content.cloneNode(true));
   showView("calculator");
+  const calcMeta = CALCBEAM_CALCS.find(c => c.id === id);
+  if(calcMeta) setMeta(calcMeta.name + " – CalcBeam", calcMeta.desc);
   const srcEl = document.getElementById("src-" + id);
   if(srcEl){
     try{
@@ -4535,6 +4556,17 @@ function showCalculator(id){
   }
   trackRecentCalculator(id);
   history.replaceState(null, "", "#calc/" + id);
+}
+
+function showPage(id){
+  const page = STATIC_PAGES[id];
+  if(!page){ console.error("No static page for", id); return; }
+  document.getElementById("pageHeading").textContent = page.h1;
+  document.getElementById("pageBreadcrumb").textContent = page.h1;
+  document.getElementById("pageProse").innerHTML = page.prose;
+  showView("page");
+  setMeta(page.title + " – CalcBeam", page.desc);
+  history.replaceState(null, "", "#page/" + id);
 }
 
 function routeFromHash(){
@@ -4549,6 +4581,10 @@ function routeFromHash(){
     showCategory(name);
     return;
   }
+  if(h.startsWith("page/")){
+    const id = decodeURIComponent(h.slice(5));
+    if(STATIC_PAGES[id]) { showPage(id); return; }
+  }
   showHome();
 }
 
@@ -4558,6 +4594,8 @@ document.addEventListener("click", (e) => {
   if(calcLink){ e.preventDefault(); showCalculator(calcLink.getAttribute("data-calc")); return; }
   const catLink = e.target.closest("[data-category]");
   if(catLink){ e.preventDefault(); showCategory(catLink.getAttribute("data-category")); return; }
+  const pageLink = e.target.closest("[data-page]");
+  if(pageLink){ e.preventDefault(); showPage(pageLink.getAttribute("data-page")); return; }
   const navHome = e.target.closest('[data-nav="home"]');
   if(navHome){ e.preventDefault(); showHome(); return; }
   const a = e.target.closest("a[href]");
@@ -4571,6 +4609,9 @@ document.addEventListener("click", (e) => {
     }
     if(CATEGORY_PAGES[href]){
       e.preventDefault(); showCategory(CATEGORY_PAGES[href]); return;
+    }
+    if(URL_TO_PAGE[href]){
+      e.preventDefault(); showPage(URL_TO_PAGE[href]); return;
     }
   }
 });
