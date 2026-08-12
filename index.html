@@ -672,6 +672,14 @@ table.calc-table th{color:var(--ink-faint);text-transform:uppercase;font-size:.7
   </div>
   <div id="view-calculator" style="display:none;">
     <div class="container" id="calcContainer"></div>
+    <div class="ad-slot-container">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6151841124879753"
+           data-ad-slot="7460285630"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
   </div>
 </main>
 
@@ -4680,7 +4688,9 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("hashchange", routeFromHash);
   routeFromHash();
   try{
-    (adsbygoogle = window.adsbygoogle || []).push({});
+    document.querySelectorAll("ins.adsbygoogle").forEach(() => {
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    });
   }catch(e){ console.warn("AdSense not ready:", e); }
 });
 
