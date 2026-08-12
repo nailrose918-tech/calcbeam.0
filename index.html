@@ -266,6 +266,13 @@ code,kbd{font-family:var(--font-mono);background:var(--surface-2);padding:.1em .
   background:linear-gradient(90deg,var(--beam),var(--warm));
 }
 
+/* ---------- Ad slot ---------- */
+.ad-slot-container{
+  max-width:1160px;margin:0 auto;padding:16px 24px 0;
+  display:flex;justify-content:center;min-height:0;
+}
+@media (max-width:640px){.ad-slot-container{padding:12px 16px 0;}}
+
 /* ---------- Search ---------- */
 .search-box{position:relative;max-width:520px;}
 .header-search-desktop{width:200px;}
@@ -495,6 +502,15 @@ table.calc-table th{color:var(--ink-faint);text-transform:uppercase;font-size:.7
     </div>
   </div>
 </header>
+
+<div class="ad-slot-container">
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-6151841124879753"
+       data-ad-slot="8947209811"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+</div>
 
 <main id="main">
   <div id="view-home">
@@ -4663,6 +4679,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   window.addEventListener("hashchange", routeFromHash);
   routeFromHash();
+  try{
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  }catch(e){ console.warn("AdSense not ready:", e); }
 });
 
 </script>
